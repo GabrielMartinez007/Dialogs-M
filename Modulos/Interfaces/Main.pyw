@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter.ttk import *
 from docx import *
-
+from docx.shared import Pt
 
 
 class Control():
@@ -107,7 +107,7 @@ class Inside():
     def __init__(self, Mframe):
         self.mainFrameL(Mframe)
         self.mainFrameT(Mframe)
-        self.buttons(Mframe)
+        GettingText(Mframe, self.DocName, self.DialogPlace, self.PjsName, self.PjsState, self.DialogEmotion, self.Dialog)
 
     def mainFrameL(self, parent):
 
@@ -162,67 +162,95 @@ class Inside():
 
     def mainFrameT(self, parent):
 
-        DocName = Entry(
+        self.DocName = Entry(
             parent,
             font=("segoe ui", 14),
-            width=40
-            ).place(x=20, y=120)
+            width=40,
+            )
+        self.DocName.place(x=20, y=120)
 
-        DialogPlace = Entry(
+        self.DialogPlace = Entry(
             parent,
             font=("segoe ui", 12),
             width=22
-            ).place(x=97, y=192)
+            )
+        self.DialogPlace.place(x=97, y=192)
 
-        PjsName = Entry(
+        self.PjsName = Entry(
             parent,
             font=("segoe ui", 12),
             width=17
-            ).place(x=410, y=192)
+            )
+        self.PjsName.place(x=410, y=192)
 
-        PjsState = Entry(
+        self.PjsState = Entry(
             parent,
             font=("segoe ui", 12),
             width=17
-            ).place(x=120, y=252)
+            )
+        self.PjsState.place(x=120, y=252)
 
-        DialogType = Entry(
+        self.DialogEmotion = Entry(
             parent,
             font=("segoe ui", 12),
             width=17
-            ).place(x=378, y=252)
+            )
+        self.DialogEmotion.place(x=378, y=252)
 
-        DialogType = Text(
+        self.Dialog = Text(
             parent,
             font=("segoe ui", 12),
             width=60,
             height=9
-            ).place(x=30, y=360)
+            )
+        self.Dialog.place(x=30, y=360)
+
+
+class GettingText():
+    def __init__(self, parent, title, place, name, emotion, type, dialog):
+
+        self.buttons(parent)
+        self.title = title
+        self.place = place
+        self.name = name
+        self.emotion = emotion
+        self.type = type
+        self.dialog = dialog
+
+    def generateDoc(self):
+        document = Document()
+        document.add_heading(self.title.get(), 0)
+        #fontStuf
+        run = document.add_paragraph().add_run()
+        style = document.styles['Normal']
+        font = style.font
+        font.name = 'Cambria'
+        font.size = Pt(15)
+        #paragraph
+        document.add_paragraph("Tipo de dialogo: " + self.type.get()+"\n")
+        document.add_paragraph("Lugar: " + self.place.get()+"\n")
+        document.add_paragraph("Emocion del emisor: " + self.emotion.get()+"\n")
+        document.add_paragraph("Dialogo de " + "\\n["+self.name.get()+"]"+ ": " + self.dialog.get('1.0', 'end'))
+        document.save('..\\'+self.title.get()+'.docx')
 
     def buttons(self, parent):
 
-        newDialog = Button(
+        """self.newDialog = Button(
             parent,
             text="Nuevo dialogo",
-            width=25
-            ).place(x=20, y=570)
+            width=25,
+            command=lambda:self.titulo()
+            ).place(x=20, y=570)"""
 
-        save = Button(
+        self.save = Button(
             parent,
             text="Guardar",
-            width=15
-            ).place(x=330, y=570)
+            width=15,
+            command=lambda:self.generateDoc(),
+            ).place(x=450, y=570)
 
-        saveOther = Button(
+        """self.saveOther = Button(
             parent,
             text="Guardar y otro",
             width=20
-            ).place(x=450, y=570)
-
-
-
-
-if __name__ == '__main__':
-    tk = Tk()
-    Control(tk)
-    tk.mainloop()
+            ).place(x=450, y=570)"""
