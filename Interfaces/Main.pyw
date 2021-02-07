@@ -14,6 +14,7 @@ class Control():
         MainFrame(tk_root,
             self.mainFrameS(),
             self.MLabelFrameS(),
+            self.shortFrameS()
             )
 
     def mainFrameS(self):
@@ -22,6 +23,13 @@ class Control():
             background="#ffffff"
             )
         return MFS
+
+    def shortFrameS(self):
+        SFS = Style()
+        SFS.configure('SFS.TFrame',
+            background="#363c3f"
+            )
+        return SFS
 
     def MLabelFrameS(self):
         LFS = Style()
@@ -54,39 +62,163 @@ class Control():
 
 
 class MainFrame():
-    def __init__(self, root, Fstyle, Lstyle):
-        MFrame = Frame(
-            root,
+    def __init__(self, root, Fstyle, Lstyle, Sstyle):
+        self.root = root
+        self.main()
+        self.labelFrame()
+        self.shortFrame()
+        Inside(self.root,)
+
+    def shortFrame(self):
+        short_Frame = Frame(self.MFrame, width=600, height=69, style='SFS.TFrame')
+        short_Frame.place(x=0, y=0)
+
+    def main(self):
+        self.MFrame = Frame(
+            self.root,
             width=580,
             height=600,
             style="MFS.TFrame"
             )
+        self.MFrame.place(x=10, y=10)
 
-        MFrame.place(x=10, y=10)
+    def labelFrame(self):
+            self.MLabelFrame = LabelFrame(
+                self.MFrame,
+                text="Datos del dialogo",
+                width=560, heigh=150,
+                style="lfs.TLabelframe"
+                )
 
-        MLabelFrame = LabelFrame(
-            MFrame,
-            text="Caracteristicas del documento",
-            width=560, heigh=550,
-            style="lfs.TLabelframe"
-            )
+            self.MLabelFrame.place(y=150, x=10)
 
-        MLabelFrame.place(y=40, x=10)
+            self.DialogLabelFrame = LabelFrame(
+                self.MFrame,
+                text="Dialogo",
+                width=560, heigh=230,
+                style="lfs.TLabelframe"
+                )
 
-        Inside(root,)
+            self.DialogLabelFrame.place(y=320, x=10)
 
 
 class Inside():
-    def __init__(self, Mframe, style=()):
+
+    def __init__(self, Mframe):
         self.mainFrameL(Mframe)
+        self.mainFrameT(Mframe)
+        self.buttons(Mframe)
 
     def mainFrameL(self, parent):
+
         Label(
             parent,
             text="Rellena los siguientes espacios con la informacion correspondiente.",
-            font=("cambria", 14),
-            background="#ffffff"
-            ).place(x=20, y=10)
+            font=("segoe ui", 13),
+            background="#363c3f",
+            foreground="#ffffff"
+            ).place(x=20, y=25)
+
+        Label(
+            parent,
+            text="Ingresa el nombre del documento aqui.",
+            font=("segoe ui", 14),
+            background="#ffffff",
+            foreground="#000000"
+            ).place(x=20, y=80)
+
+
+        Label(
+            parent,
+            text="Lugar :",
+            font=("segoe ui", 14),
+            background="#ffffff",
+            foreground="#000000"
+            ).place(x=30, y=190)
+
+        Label(
+            parent,
+            text="Nombre :",
+            font=("segoe ui", 14),
+            background="#ffffff",
+            foreground="#000000"
+            ).place(x=320, y=190)
+
+        Label(
+            parent,
+            text="Emocion :",
+            font=("segoe ui", 14),
+            background="#ffffff",
+            foreground="#000000"
+            ).place(x=30, y=250)
+
+        Label(
+            parent,
+            text="Tipo :",
+            font=("segoe ui", 14),
+            background="#ffffff",
+            foreground="#000000"
+            ).place(x=320, y=250)
+
+    def mainFrameT(self, parent):
+
+        DocName = Entry(
+            parent,
+            font=("segoe ui", 14),
+            width=40
+            ).place(x=20, y=120)
+
+        DialogPlace = Entry(
+            parent,
+            font=("segoe ui", 12),
+            width=22
+            ).place(x=97, y=192)
+
+        PjsName = Entry(
+            parent,
+            font=("segoe ui", 12),
+            width=17
+            ).place(x=410, y=192)
+
+        PjsState = Entry(
+            parent,
+            font=("segoe ui", 12),
+            width=17
+            ).place(x=120, y=252)
+
+        DialogType = Entry(
+            parent,
+            font=("segoe ui", 12),
+            width=17
+            ).place(x=378, y=252)
+
+        DialogType = Text(
+            parent,
+            font=("segoe ui", 12),
+            width=60,
+            height=9
+            ).place(x=30, y=360)
+
+    def buttons(self, parent):
+
+        newDialog = Button(
+            parent,
+            text="Nuevo dialogo",
+            width=25
+            ).place(x=20, y=570)
+
+        save = Button(
+            parent,
+            text="Guardar",
+            width=15
+            ).place(x=330, y=570)
+
+        saveOther = Button(
+            parent,
+            text="Guardar y otro",
+            width=20
+            ).place(x=450, y=570)
+
 
 
 
